@@ -22,19 +22,42 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: Use Node.js
         uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Start project
+        run: npm run start
       - run: echo "🍏 This job's status is ${{ job.status }}."
   lint:
     runs-on: ubuntu-latest
     steps:
-      - name:  Lint and fix the code
-        run: npm lint:fix
-      - run: echo "🖥️ The lint step is completed."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Start project
+        run: npm run start
+      - name:  Run lint and fix the code on the Backend
+        run: npm lint:fix -w backend
+      - run: echo "🖥️ The lint step for backend is completed."
+      - name:  Run lint and fix the code on the Frontend
+        run: npm lint:fix -w frontend
+      - run: echo "🖥️ The lint step for frontend is completed."
       - run: echo "🍏 This job's status is ${{ job.status }}."
 
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+      - name: Install dependencies
+        run: npm install
+      - name: Start project
+        run: npm run start
       - name: Test the code.
-        run: npm test
+        run: npm run test
       - run: echo "🖥️ Tests are completed."
       - run: echo "🍏 This job's status is ${{ job.status }}."
