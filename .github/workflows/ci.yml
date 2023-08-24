@@ -9,10 +9,12 @@ on:
 
   workflow_dispatch:
 
-
+permissions:
+    contents: write
 jobs:
   build-backend:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
       - name: Launch project
