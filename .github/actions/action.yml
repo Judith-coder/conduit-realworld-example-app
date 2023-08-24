@@ -16,3 +16,4 @@ runs:
           ${{ runner.os }}-node-
     - name: Installation des dépendances
       run: npm install
+      shell: bash
