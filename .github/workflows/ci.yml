@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Launch project
-        uses: ../actions/launch-project-action@v1
+        uses: actions/conduit-realworld-example-app@v1
       - name: Build
         run: npm run build -w backend
   build-frontend:
