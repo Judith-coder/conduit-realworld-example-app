@@ -28,7 +28,7 @@ jobs:
         with:
           draft: false
           prerelease: false
-          name: test release 2
+          name: test release 3
           tag_name: v1
 
   build-frontend:
@@ -39,6 +39,15 @@ jobs:
         uses: ./.github/actions
       - name: Build
         run: npm run build -w frontend
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          draft: false
+          prerelease: false
+          name: test release 3
+          tag_name: v1
   test-backend:
     runs-on: ubuntu-latest
     steps:
