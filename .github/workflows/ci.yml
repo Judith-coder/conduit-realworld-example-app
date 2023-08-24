@@ -3,7 +3,7 @@ name: Integration continue
 on:
   push:
     tags:
-      - 'v*.*.*' # Push events to matching v*, i.e. v1.0, v20.15.10
+      - 'v*.*' # Push events to matching v*, i.e. v1.0, v20.15.10
     branches:
       - main
 
@@ -21,11 +21,13 @@ jobs:
         run: npm run build -w backend
       - name: Release
         uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           draft: false
           prerelease: false
-          name: "test release 1"
-          tag_name: 'v1'
+          name: test release 2
+          tag_name: v1
 
   build-frontend:
     runs-on: ubuntu-latest
