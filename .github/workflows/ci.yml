@@ -19,10 +19,21 @@ jobs:
         uses: ./.github/actions
       - name: Build
         run: npm run build -w backend
-      - run: git tag -a -m "Description of this release" v1.1
-      - run: git push --follow-tags
-      - name: Create Release
+      - name: Tag
+        if: startsWith(github.ref, 'refs/heads/release/')
+        run: |
+          git tag "v$env:GitVersion_SemVer"
+          git push origin "v$env:GitVersion_SemVer"
+      - name: Release
+        if: startsWith(github.ref, 'refs/heads/release/')
         uses: softprops/action-gh-release@v1
+        with:
+          name: v${{ env.GitVersion_SemVer }}
+          prerelease: ${{ env.GitVersion_PreReleaseLabel != '' }}
+          files: ./artifacts/sidekick-*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }
+
   build-frontend:
     runs-on: ubuntu-latest
     steps:
