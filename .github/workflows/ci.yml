@@ -21,7 +21,6 @@ jobs:
         run: npm run build -w backend
       - name: Create Release
         uses: softprops/action-gh-release@v1
-        if: startWith(github.ref, 'refs/tags/')
   build-frontend:
     runs-on: ubuntu-latest
     steps:
