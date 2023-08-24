@@ -21,8 +21,11 @@ jobs:
         run: npm run build -w backend
       - name: Release
         uses: softprops/action-gh-release@v1
-        with: 
-          tag_name: v1.1
+        with:
+          draft: false
+          prerelease: false
+          name: "test release 1"
+          tag_name: 'v1'
 
   build-frontend:
     runs-on: ubuntu-latest
