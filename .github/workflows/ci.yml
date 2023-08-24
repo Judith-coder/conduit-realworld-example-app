@@ -19,7 +19,7 @@ jobs:
         uses: ./.github/actions
       - name: Build
         run: npm run build -w backend
-      - run: git tag 'test tag'
+      - run: git tag v1.1
       - name: Create Release
         uses: softprops/action-gh-release@v1
   build-frontend:
