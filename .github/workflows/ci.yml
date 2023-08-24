@@ -21,16 +21,6 @@ jobs:
         uses: ./.github/actions
       - name: Build
         run: npm run build -w backend
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          draft: false
-          prerelease: false
-          name: test release 3
-          tag_name: v1
-
   build-frontend:
     runs-on: ubuntu-latest
     steps:
@@ -39,15 +29,6 @@ jobs:
         uses: ./.github/actions
       - name: Build
         run: npm run build -w frontend
-      - name: Release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
-        with:
-          draft: false
-          prerelease: false
-          name: test release 3
-          tag_name: v1
   test-backend:
     runs-on: ubuntu-latest
     steps:
@@ -80,3 +61,23 @@ jobs:
         uses: ./.github/actions
       - name: Lint
         run: npm run lint -w frontend
+  create-archive-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Archive Release
+        uses: thedoctor0/zip-release@0.7.1
+        with:
+          type: 'zip'
+          filename: 'releasetest.zip'
+          exclusions: '*.git* /*node_modules/* .editorconfig .husky LICENSE action.yml'
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          draft: false
+          prerelease: false
+          name: test release 3
+          tag_name: v1
+          file: 'releasetest.zip'
+
